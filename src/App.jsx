@@ -295,39 +295,38 @@ export default function App() {
 
       {/* TOP BAR */}
       <header className="bg-slate-950/60 backdrop-blur-3xl border-b border-white/5 shrink-0 z-50">
-        <div className="max-w-[1600px] mx-auto px-8 h-20 flex items-center justify-between gap-12">
-            <div className="flex items-center gap-10">
-                <div className="flex items-center gap-4 pr-10 border-r border-white/10">
-                    <div className="w-10 h-10 bg-sky-500 rounded-2xl shadow-xl shadow-sky-500/30 flex items-center justify-center animate-pulse"><Heart className="w-5 h-5 text-white fill-current" /></div>
-                    <h1 className="text-xl font-black tracking-tight hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-500">DocPlaybook</h1>
+        <div className="max-w-[1600px] mx-auto px-5 h-14 flex items-center justify-between gap-6">
+            <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3 pr-6 border-r border-white/10">
+                    <div className="w-8 h-8 bg-sky-500 rounded-xl shadow-lg shadow-sky-500/30 flex items-center justify-center"><Heart className="w-4 h-4 text-white fill-current" /></div>
+                    <h1 className="text-sm font-black tracking-tight hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-500 uppercase">DocPlaybook</h1>
                 </div>
-                <nav className="hidden xl:flex items-center gap-2">
+                <nav className="hidden xl:flex items-center gap-1">
                     {CATEGORIES.map((cat) => (
-                        <button key={cat.id} onClick={() => { setSelectedCategory(cat.id); setSelectedProtocol(null); }} className={`flex items-center gap-3 px-5 py-2.5 rounded-2xl transition-all duration-500 relative group ${selectedCategory === cat.id ? 'text-sky-400 bg-sky-500/5' : 'text-slate-500 hover:text-slate-100 hover:bg-white/5'}`}>
-                            <cat.icon className={`w-4 h-4 ${selectedCategory === cat.id ? 'text-sky-400' : 'group-hover:text-sky-300'}`} />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">{cat.name}</span>
-                            {selectedCategory === cat.id && <motion.div layoutId="nav-active" className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-1 h-1 bg-sky-500 rounded-full shadow-[0_0_10px_#0ea5e9]" />}
+                        <button key={cat.id} onClick={() => { setSelectedCategory(cat.id); setSelectedProtocol(null); }} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all duration-300 relative group ${selectedCategory === cat.id ? 'text-sky-400 bg-sky-500/5' : 'text-slate-500 hover:text-slate-100 hover:bg-white/5'}`}>
+                            <cat.icon className={`w-3.5 h-3.5 ${selectedCategory === cat.id ? 'text-sky-400' : 'group-hover:text-sky-300'}`} />
+                            <span className="text-[9px] font-black uppercase tracking-widest">{cat.name}</span>
                         </button>
                     ))}
                 </nav>
             </div>
 
-            <div className="flex-1 max-w-lg relative group hidden md:block">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 group-focus-within:text-sky-400 transition-colors" />
-                <input type="text" placeholder="Search playbook..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-slate-900/50 border border-white/5 rounded-2xl py-3.5 pl-14 pr-6 focus:outline-none focus:border-sky-500/30 text-sm transition-all shadow-inner placeholder:text-slate-700" />
+            <div className="flex-1 max-w-xs relative group hidden md:block">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600" />
+                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-slate-900/50 border border-white/5 rounded-xl py-1.5 pl-10 pr-4 focus:outline-none focus:border-sky-500/30 text-[11px] transition-all shadow-inner" />
             </div>
 
-            <div className="flex items-center gap-6">
-                <div className="hidden sm:flex items-center gap-4 px-5 py-2.5 bg-slate-900/50 rounded-2xl border border-white/5">
-                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${isAdminMode ? 'text-orange-400' : 'text-slate-600'}`}>{isAdminMode ? 'Admin' : 'View'}</span>
-                    <button onClick={() => setIsAdminMode(!isAdminMode)} className={`w-10 h-5 rounded-full relative transition-all duration-500 ${isAdminMode ? 'bg-orange-500/30' : 'bg-slate-800'}`}>
-                        <motion.div animate={{ x: isAdminMode ? 22 : 3 }} className={`w-3.5 h-3.5 rounded-full mt-0.5 shadow-lg ${isAdminMode ? 'bg-orange-400' : 'bg-slate-600'}`} />
+            <div className="flex items-center gap-4">
+                <div className="hidden sm:flex items-center gap-3 px-3 py-1.5 bg-slate-900/50 rounded-xl border border-white/5">
+                    <span className={`text-[8px] font-black uppercase tracking-widest ${isAdminMode ? 'text-orange-400' : 'text-slate-600'}`}>{isAdminMode ? 'Admin' : 'View'}</span>
+                    <button onClick={() => setIsAdminMode(!isAdminMode)} className={`w-8 h-4 rounded-full relative transition-all ${isAdminMode ? 'bg-orange-500/30' : 'bg-slate-800'}`}>
+                        <motion.div animate={{ x: isAdminMode ? 18 : 2 }} className={`w-2.5 h-2.5 rounded-full mt-0.5 shadow-lg ${isAdminMode ? 'bg-orange-400' : 'bg-slate-600'}`} />
                     </button>
                 </div>
                 {isAdminMode && (
-                    <button onClick={() => selectedCategory === 'ward' ? setIsCreatingProtocol(true) : setIsCreating(true)} className="btn-primary px-6 h-12 shadow-sky-500/20"><Plus className="w-5 h-5" />Add</button>
+                    <button onClick={() => selectedCategory === 'ward' ? setIsCreatingProtocol(true) : setIsCreating(true)} className="px-4 h-8 bg-sky-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-sky-500 transition-all shadow-lg shadow-sky-600/10"><Plus className="w-3.5 h-3.5" /></button>
                 )}
-                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="xl:hidden p-3 bg-slate-900 rounded-2xl text-slate-400 hover:text-white"><Menu className="w-5 h-5" /></button>
+                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="xl:hidden p-2 bg-slate-900 rounded-xl text-slate-400"><Menu className="w-4 h-4" /></button>
             </div>
         </div>
       </header>
@@ -415,91 +414,82 @@ export default function App() {
                 </div>
             ) : selectedCategory === 'ward' && !selectedProtocol ? (
                 /* DASHBOARD + PLAYBOOK */                <>
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12 grid grid-cols-1 xl:grid-cols-3 gap-8">
-                        <div className="xl:col-span-2 glass-card p-8 medical-gradient flex flex-col justify-between group overflow-hidden relative rounded-3xl">
-                            <div className="absolute top-0 right-0 p-16 bg-sky-500/10 blur-[80px] rounded-full -mr-10 -mt-10 group-hover:bg-sky-500/20 transition-all duration-1000" />
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8 grid grid-cols-1 xl:grid-cols-3 gap-5">
+                        <div className="xl:col-span-2 glass-card p-5 medical-gradient flex flex-col justify-between group overflow-hidden relative rounded-xl border border-white/5">
                             <div className="relative z-10">
-                                <div className="flex items-center gap-3 text-sky-400 mb-4"><ShieldCheck className="w-5 h-5 animate-float" /><span className="text-[9px] font-black uppercase tracking-[0.3em]">Protocol Hub</span></div>
-                                <h2 className="text-4xl font-black leading-tight tracking-tight max-w-xl">Precision Care, <br/><span className="text-slate-500 text-3xl">Day by Day.</span></h2>
+                                <div className="flex items-center gap-2 text-sky-400 mb-2"><ShieldCheck className="w-3.5 h-3.5" /><span className="text-[8px] font-black uppercase tracking-widest">Protocol Hub</span></div>
+                                <h2 className="text-xl font-black leading-tight tracking-tight text-white">Precision Care Hub</h2>
                             </div>
-                            <div className="mt-8 flex items-center gap-8 relative z-10 pt-6 border-t border-white/5">
-                                <div className="flex flex-col"><span className="text-3xl font-black text-white">{protocols.length}</span><span className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Conditions</span></div>
-                                <div className="w-px h-10 bg-white/5" />
-                                <div className="flex flex-col"><span className="text-3xl font-black text-white">{templates.length}</span><span className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Templates</span></div>
+                            <div className="mt-4 flex items-center gap-5 relative z-10 pt-3 border-t border-white/5">
+                                <div className="flex flex-col"><span className="text-xl font-black text-white">{protocols.length}</span><span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">Conditions</span></div>
+                                <div className="flex flex-col"><span className="text-xl font-black text-white">{templates.length}</span><span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">Templates</span></div>
                             </div>
                         </div>
-                        <div className="glass-card p-8 flex flex-col justify-between border-emerald-500/20 bg-emerald-500/5 relative group overflow-hidden rounded-3xl">
-                             <div className="relative z-10"><h3 className="text-lg font-black mb-1 flex items-center gap-3"><Award className="w-5 h-5 text-emerald-400" />Status</h3><p className="text-slate-500 text-xs font-medium leading-relaxed">System running on MSSQL.</p></div>
-                             <div className="pt-6 relative z-10"><button onClick={() => setSelectedCategory('soap')} className="w-full btn-secondary h-12 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 text-[9px]">Daily Notes <ArrowRight className="w-4 h-4 ml-2" /></button></div>
+                        <div className="glass-card p-5 flex flex-col justify-between border-white/5 bg-slate-900/40 rounded-xl">
+                             <h3 className="text-sm font-black mb-1 flex items-center gap-2 text-slate-300"><Award className="w-4 h-4 text-emerald-400" />Status</h3>
+                             <button onClick={() => setSelectedCategory('soap')} className="w-full h-9 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Daily Notes</button>
                         </div>
                     </motion.div>
 
-                    <div className="mb-6 flex items-center justify-between"><h2 className="text-xl font-black tracking-tight flex items-center gap-3 text-slate-400">Condition Playbook <span className="text-slate-700 text-sm">{filteredProtocols.length}</span></h2></div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                         <AnimatePresence mode='popLayout'>
                             {filteredProtocols.map((p, idx) => (
                                 <motion.div 
                                     key={p.id} 
-                                    initial={{ opacity: 0, y: 15 }} 
+                                    initial={{ opacity: 0, y: 10 }} 
                                     animate={{ opacity: 1, y: 0 }} 
-                                    transition={{ delay: idx * 0.03 }}
+                                    transition={{ delay: idx * 0.02 }}
                                     onClick={() => setSelectedProtocol(p)} 
-                                    className="glass-card glass-card-hover p-6 group cursor-pointer border-l-2 border-l-sky-500/40 rounded-[1.5rem]"
+                                    className="glass-card p-4 group cursor-pointer border-l-2 border-l-sky-500/40 rounded-xl bg-slate-900/20 hover:bg-slate-900/40 transition-all"
                                 >
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="p-3 bg-slate-900 rounded-xl group-hover:bg-sky-500/10 transition-colors"><Stethoscope className="w-6 h-6 text-sky-400" /></div>
-                                        <span className="px-3 py-1 bg-sky-500/10 text-sky-400 rounded-full text-[8px] font-black border border-sky-500/20 uppercase tracking-widest">{(p.days || []).length} Days</span>
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div className="p-2 bg-slate-900 rounded-lg group-hover:bg-sky-500/10 transition-colors"><Stethoscope className="w-4 h-4 text-sky-400" /></div>
+                                        <span className="px-2 py-0.5 bg-sky-500/10 text-sky-400 rounded-full text-[7px] font-black border border-sky-500/20 uppercase">{(p.days || []).length} Days</span>
                                     </div>
-                                    <h3 className="text-lg font-black mb-2 group-hover:text-sky-400 transition-colors leading-tight">{p.diagnosis}</h3>
-                                    <p className="text-slate-500 text-sm mb-6 line-clamp-2 font-medium">{p.description}</p>
-                                    <div className="flex items-center justify-between text-[9px] text-slate-600 pt-4 border-t border-white/5 uppercase font-black tracking-widest">
-                                        <span className="flex items-center gap-2">View <ArrowRight className="w-3 h-3" /></span>
-                                        <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center group-hover:bg-sky-600 transition-all"><ChevronRight className="w-4 h-4 text-white" /></div>
+                                    <h3 className="text-sm font-black mb-1 group-hover:text-sky-400 transition-colors line-clamp-1">{p.diagnosis}</h3>
+                                    <p className="text-slate-500 text-[11px] mb-4 line-clamp-2 font-medium leading-relaxed">{p.description}</p>
+                                    <div className="flex items-center justify-between text-[8px] text-slate-600 pt-3 border-t border-white/5 uppercase font-black">
+                                        <span>View Pathway</span>
+                                        <ChevronRight className="w-3 h-3 text-sky-500" />
                                     </div>
                                 </motion.div>
                             ))}
                         </AnimatePresence>
                     </div>
-                </>
 
             ) : selectedProtocol ? (
-                /* DAILY COURSE */
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
-                    <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-white/5 pb-8 gap-8">
-                        <div className="space-y-4">
-                            <button onClick={() => setSelectedProtocol(null)} className="flex items-center gap-3 px-6 py-3 bg-sky-600 text-white rounded-2xl shadow-xl shadow-sky-600/20 active:scale-95 transition-all group w-fit">
-                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                                <span className="text-[11px] font-black uppercase tracking-widest">Back to Directory</span>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-4 gap-4">
+                        <div className="space-y-3">
+                            <button onClick={() => setSelectedProtocol(null)} className="flex items-center gap-2 px-3 py-1.5 bg-sky-600 text-white rounded-lg shadow-lg shadow-sky-600/10 active:scale-95 transition-all w-fit">
+                                <ArrowLeft className="w-3.5 h-3.5" />
+                                <span className="text-[9px] font-black uppercase tracking-widest">Back</span>
                             </button>
-                            <div>
-                                <div className="flex items-center gap-2 text-sky-400 mb-1"><ShieldCheck className="w-4 h-4" /><span className="text-[9px] font-black uppercase tracking-[0.3em]">Verified Pathway</span></div>
-                                <div className="flex items-center gap-6">
-                                    <h2 className="text-4xl font-black text-white tracking-tight leading-tight">{selectedProtocol.diagnosis}</h2>
-                                    {isAdminMode && <button onClick={() => handleDeleteProtocol(selectedProtocol.id)} title="Remove Condition" className="p-3 bg-rose-500/10 text-rose-500 rounded-xl hover:bg-rose-500 hover:text-white transition-all active:scale-90"><Trash2 className="w-5 h-5" /></button>}
-                                </div>
-                                <p className="text-slate-500 text-lg max-w-4xl font-medium leading-relaxed mt-2">{selectedProtocol.description}</p>
+                            <div className="flex items-center gap-4">
+                                <h2 className="text-xl font-black text-white tracking-tight">{selectedProtocol.diagnosis}</h2>
+                                {isAdminMode && <button onClick={() => handleDeleteProtocol(selectedProtocol.id)} className="p-2 bg-rose-500/10 text-rose-500 rounded-lg hover:bg-rose-500 hover:text-white transition-all"><Trash2 className="w-4 h-4" /></button>}
                             </div>
                         </div>
-                        <div className="flex flex-wrap items-center gap-4 shrink-0">
-                            <button onClick={() => handleCopy((selectedProtocol.days || []).map(d => `Day ${d.dayNumber}:\n${d.note}`).join('\n\n'), 'all')} className={`btn-secondary h-12 px-6 rounded-xl text-[10px] ${copyStatus === 'all' ? 'text-emerald-400 border-emerald-500/50' : ''}`}>{copyStatus === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy Course</button>
-                            {isAdminMode && <button onClick={() => handleAddDayToProtocol(selectedProtocol.id)} className="btn-primary h-12 px-6 rounded-xl active:scale-95"><Plus className="w-4 h-4" />Add Day</button>}
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => handleCopy((selectedProtocol.days || []).map(d => `Day ${d.dayNumber}:\n${d.note}`).join('\n\n'), 'all')} className="h-9 px-4 bg-slate-800 text-slate-300 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-slate-700 transition-all">Copy Course</button>
+                            {isAdminMode && <button onClick={() => handleAddDayToProtocol(selectedProtocol.id)} className="h-9 px-4 bg-sky-600 text-white rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-sky-500 transition-all">Add Day</button>}
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 gap-8 relative pb-24">
-                        <div className="absolute left-[39px] top-8 bottom-8 w-px bg-white/5 hidden md:block" />
+                    <div className="grid grid-cols-1 gap-4 relative pb-16">
+                        <div className="absolute left-[27px] top-6 bottom-6 w-px bg-white/5 hidden md:block" />
                         {(selectedProtocol.days || []).map((day) => (
-                            <div key={day.id} className="relative md:pl-24 group">
-                                <div className="absolute left-[31px] top-12 w-4 h-4 rounded-full bg-slate-950 border-4 border-slate-800 z-10 hidden md:block group-hover:border-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)]" />
-                                <div className="glass-card p-6 md:p-8 border-white/5 hover:border-sky-500/20 transition-all duration-500 bg-slate-900/10 rounded-3xl">
-                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
-                                        <div className="flex items-center gap-6"><div className="w-14 h-14 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center text-3xl font-black text-sky-400 group-hover:bg-sky-600 group-hover:text-white transition-all duration-500 shadow-lg">{day.dayNumber}</div><h4 className="font-black text-2xl text-white tracking-tight">Day {day.dayNumber}</h4></div>
-                                        <div className="flex flex-wrap items-center gap-3">
-                                            <button onClick={() => handleCopy(day.note, day.id)} className={`flex-1 sm:flex-none h-12 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest border active:scale-95 ${copyStatus === day.id ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-950 text-slate-500 border-white/5 hover:border-sky-500/30 hover:text-sky-300'}`}>{copyStatus === day.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy</button>
-                                            <button onClick={() => setDraftingDay({ protocolId: selectedProtocol.id, dayId: day.id, note: day.note, dayNumber: day.dayNumber, isMasterEdit: isAdminMode, variables: extractVariables(day.note) })} className={`flex-1 sm:flex-none h-12 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest border active:scale-95 ${isAdminMode ? 'bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500 hover:text-white' : 'bg-sky-600 text-white shadow-lg shadow-sky-600/20 hover:bg-sky-500'}`}>{isAdminMode ? <Edit2 className="w-4 h-4" /> : <Send className="w-4 h-4" />}{isAdminMode ? 'Edit' : 'Personalize'}</button>
-                                            {isAdminMode && <button onClick={() => handleRemoveDayFromProtocol(selectedProtocol.id, day.id)} className="w-12 h-12 bg-rose-500/10 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center border border-rose-500/20 active:scale-90 shrink-0"><MinusCircle className="w-4 h-4" /></button>}
+                            <div key={day.id} className="relative md:pl-16 group">
+                                <div className="absolute left-[23px] top-9 w-2 h-2 rounded-full bg-slate-800 border-2 border-slate-700 z-10 hidden md:block group-hover:border-sky-500 transition-colors" />
+                                <div className="glass-card p-4 md:p-5 border-white/5 bg-slate-900/10 rounded-xl">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                                        <div className="flex items-center gap-4"><div className="w-10 h-10 rounded-lg bg-slate-900 border border-white/10 flex items-center justify-center text-xl font-black text-sky-400">{day.dayNumber}</div><h4 className="font-black text-lg text-white">Day {day.dayNumber}</h4></div>
+                                        <div className="flex items-center gap-2">
+                                            <button onClick={() => handleCopy(day.note, day.id)} className={`h-8 px-4 rounded-lg text-[8px] font-black uppercase tracking-widest border transition-all ${copyStatus === day.id ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-950 text-slate-500 border-white/5 hover:border-sky-500/30'}`}>Copy</button>
+                                            <button onClick={() => setDraftingDay({ protocolId: selectedProtocol.id, dayId: day.id, note: day.note, dayNumber: day.dayNumber, isMasterEdit: isAdminMode, variables: extractVariables(day.note) })} className={`h-8 px-4 rounded-lg text-[8px] font-black uppercase tracking-widest border transition-all ${isAdminMode ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' : 'bg-sky-600 text-white hover:bg-sky-500'}`}>{isAdminMode ? 'Edit' : 'Personalize'}</button>
+                                            {isAdminMode && <button onClick={() => handleRemoveDayFromProtocol(selectedProtocol.id, day.id)} className="w-8 h-8 bg-rose-500/10 text-rose-400 rounded-lg flex items-center justify-center"><MinusCircle className="w-4 h-4" /></button>}
                                         </div>
                                     </div>
-                                    <div className="bg-[#020617]/80 rounded-2xl p-6 md:p-8 border border-white/5 text-slate-300 text-lg leading-relaxed whitespace-pre-wrap font-medium shadow-inner">{day.note}</div>
+                                    <div className="bg-[#020617]/80 rounded-xl p-4 border border-white/5 text-slate-300 text-base leading-relaxed whitespace-pre-wrap font-medium">{day.note}</div>
                                 </div>
                             </div>
                         ))}
@@ -542,17 +532,17 @@ export default function App() {
       {/* MODALS */}
       <AnimatePresence>
         {securityLock && (
-          <div className="fixed inset-0 z-[300] flex items-center justify-center p-8 bg-slate-950/98 backdrop-blur-3xl">
-            <motion.div initial={{ opacity: 0, scale: 0.9, y: 40 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 40 }} className={`relative w-full max-w-md glass-card p-14 border-2 shadow-[0_0_100px_rgba(0,0,0,0.8)] ${securityLock.type === 'delete' ? 'border-rose-500/40' : 'border-orange-500/40'}`}>
-              <div className="text-center space-y-12">
-                <div className={`mx-auto w-28 h-28 rounded-full flex items-center justify-center shadow-2xl ${securityLock.type === 'delete' ? 'bg-rose-500/10 text-rose-500 animate-pulse' : 'bg-orange-500/10 text-orange-500'}`}>{securityLock.type === 'delete' ? <AlertTriangle className="w-14 h-14" /> : <Fingerprint className="w-14 h-14" />}</div>
-                <div><h2 className="text-4xl font-black uppercase tracking-tight">Authorization</h2><p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Confirm master deletion protocol</p></div>
-                <div className="p-12 bg-[#020617] rounded-[3rem] border border-white/5 shadow-inner"><div className="text-7xl font-black tracking-[0.4em] text-white tabular-nums text-glow">{securityLock.code}</div></div>
-                <div className="space-y-8">
-                    <input autoFocus type="tel" maxLength={6} placeholder="••••••" value={securityLock.input} onChange={(e) => setSecurityLock({ ...securityLock, input: e.target.value })} className="w-full bg-[#020617] border border-white/10 rounded-[2.5rem] py-8 text-center text-6xl font-black tracking-[0.5em] focus:border-sky-500/50 text-white shadow-inner" />
-                    <div className="flex gap-4">
-                        <button disabled={securityLock.input !== securityLock.code} onClick={() => { securityLock.action(); setSecurityLock(null); }} className={`flex-1 py-7 font-black uppercase tracking-[0.3em] text-[10px] rounded-[2rem] transition-all duration-500 ${securityLock.input === securityLock.code ? 'bg-sky-600 text-white shadow-[0_0_40px_rgba(14,165,233,0.3)]' : 'bg-slate-900 text-slate-700'}`}>Verify Protocol</button>
-                        <button onClick={() => setSecurityLock(null)} className="px-12 bg-slate-900 text-slate-500 rounded-[2rem] font-black uppercase tracking-[0.3em] text-[10px] py-7 hover:bg-slate-800 transition-all">Abort</button>
+          <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/98 backdrop-blur-3xl">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className={`relative w-full max-w-xs glass-card p-8 border border-white/10 shadow-2xl ${securityLock.type === 'delete' ? 'border-rose-500/30' : 'border-orange-500/30'}`}>
+              <div className="text-center space-y-8">
+                <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center ${securityLock.type === 'delete' ? 'bg-rose-500/10 text-rose-500' : 'bg-orange-500/10 text-orange-500'}`}>{securityLock.type === 'delete' ? <AlertTriangle className="w-8 h-8" /> : <Fingerprint className="w-8 h-8" />}</div>
+                <div><h2 className="text-xl font-black uppercase tracking-tight">Authorization</h2><p className="text-slate-500 text-[8px] font-black uppercase tracking-[0.3em] mt-1">Confirm code to proceed</p></div>
+                <div className="p-6 bg-[#020617] rounded-xl border border-white/5"><div className="text-4xl font-black tracking-[0.3em] text-white tabular-nums text-glow">{securityLock.code}</div></div>
+                <div className="space-y-4">
+                    <input autoFocus type="tel" maxLength={6} placeholder="••••••" value={securityLock.input} onChange={(e) => setSecurityLock({ ...securityLock, input: e.target.value })} className="w-full bg-[#020617] border border-white/10 rounded-xl py-4 text-center text-3xl font-black tracking-[0.3em] focus:border-sky-500/50 text-white shadow-inner" />
+                    <div className="flex gap-3">
+                        <button disabled={securityLock.input !== securityLock.code} onClick={() => { securityLock.action(); setSecurityLock(null); }} className={`flex-1 h-11 font-black uppercase tracking-widest text-[9px] rounded-xl transition-all ${securityLock.input === securityLock.code ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/10' : 'bg-slate-900 text-slate-700'}`}>Verify</button>
+                        <button onClick={() => setSecurityLock(null)} className="px-6 h-11 bg-slate-900 text-slate-500 rounded-xl font-black uppercase tracking-widest text-[9px]">Abort</button>
                     </div>
                 </div>
               </div>
@@ -561,19 +551,19 @@ export default function App() {
         )}
 
         {isCreatingProtocol && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-[#020617]/95 backdrop-blur-3xl">
-            <motion.div initial={{ opacity: 0, scale: 0.98, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.98, y: 20 }} className="relative w-full max-w-4xl glass-card bg-slate-900/60 p-16 border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]">
-                <div className="flex justify-between items-center mb-12">
-                    <h2 className="text-4xl font-black flex items-center gap-6 tracking-tight uppercase"><div className="p-4 bg-sky-500/10 rounded-3xl"><Plus className="w-8 h-8 text-sky-400" /></div>New Playbook Entry</h2>
-                    <button onClick={() => setIsCreatingProtocol(false)} className="p-4 bg-slate-800 rounded-3xl text-slate-500 hover:text-white"><X className="w-6 h-6" /></button>
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-[#020617]/95 backdrop-blur-3xl">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-xl glass-card bg-slate-900/60 p-8 border-white/5">
+                <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-lg font-black flex items-center gap-3 tracking-tight uppercase"><Plus className="w-5 h-5 text-sky-400" />New Condition</h2>
+                    <button onClick={() => setIsCreatingProtocol(false)} className="p-2 bg-slate-800 rounded-lg text-slate-500"><X className="w-4 h-4" /></button>
                 </div>
-                <form onSubmit={handleCreateProtocol} className="space-y-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div className="space-y-3"><label className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] ml-1">Condition Name</label><input name="diagnosis" required className="w-full bg-[#020617] border border-white/10 rounded-[2rem] py-6 px-10 focus:border-sky-500/50 text-white font-bold text-2xl shadow-inner" placeholder="e.g. Pneumonia" /></div>
-                        <div className="space-y-3"><label className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] ml-1">Clinical Summary</label><input name="description" required className="w-full bg-[#020617] border border-white/10 rounded-[2rem] py-6 px-10 focus:border-sky-500/50 text-white font-bold text-lg shadow-inner" placeholder="Standard care pathway..." /></div>
+                <form onSubmit={handleCreateProtocol} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2"><label className="text-[8px] font-black text-slate-600 uppercase tracking-widest">Diagnosis</label><input name="diagnosis" required className="w-full bg-[#020617] border border-white/10 rounded-lg py-3 px-5 focus:border-sky-500/50 text-white font-bold text-lg" placeholder="e.g. Pneumonia" /></div>
+                        <div className="space-y-2"><label className="text-[8px] font-black text-slate-600 uppercase tracking-widest">Clinical Summary</label><input name="description" required className="w-full bg-[#020617] border border-white/10 rounded-lg py-3 px-5 focus:border-sky-500/50 text-white font-bold text-sm" placeholder="Care pathway..." /></div>
                     </div>
-                    <div className="space-y-3"><label className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] ml-1">Day 1 Clinical Plan</label><textarea name="initialDayNote" required rows={6} className="w-full bg-[#020617] border border-white/10 rounded-[3rem] py-8 px-10 focus:border-sky-500/50 text-white font-medium text-xl leading-relaxed shadow-inner" placeholder="Specify orders and documentation templates... Use {{variables}}." /></div>
-                    <div className="flex gap-6 pt-10"><button type="submit" className="flex-1 btn-primary py-8 rounded-[2rem] shadow-sky-600/30">Initialize Condition</button><button type="button" onClick={() => setIsCreatingProtocol(false)} className="px-14 btn-secondary py-8 rounded-[2rem]">Cancel</button></div>
+                    <div className="space-y-2"><label className="text-[8px] font-black text-slate-600 uppercase tracking-widest">Day 1 Note Template</label><textarea name="initialDayNote" required rows={4} className="w-full bg-[#020617] border border-white/10 rounded-lg py-4 px-5 focus:border-sky-500/50 text-white font-medium text-base leading-relaxed" placeholder="Plan content..." /></div>
+                    <div className="flex gap-4 pt-4"><button type="submit" className="flex-1 h-11 bg-sky-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg shadow-sky-600/10">Initialize Condition</button><button type="button" onClick={() => setIsCreatingProtocol(false)} className="px-8 h-11 bg-slate-800 text-slate-400 rounded-lg text-[9px] font-black uppercase tracking-widest">Cancel</button></div>
                 </form>
             </motion.div>
           </div>
