@@ -589,36 +589,32 @@ export default function App() {
                     <div className="flex gap-6 pt-10"><button type="submit" className="flex-1 py-8 bg-purple-600 hover:bg-purple-500 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] shadow-2xl shadow-purple-600/30 transition-all active:scale-95 text-[10px] flex items-center justify-center gap-4"><Save className="w-6 h-6" />Save Template</button><button type="button" onClick={() => { setEditingTemplate(null); setIsCreating(false); }} className="px-14 btn-secondary py-8 rounded-[2rem]">Cancel</button></div>
                 </form>
             </motion.div>
-          </div>
-        )}
-
-        {draftingDay && (
-          <div className="fixed inset-0 z-[250] flex items-center justify-center p-8 bg-[#020617]/98 backdrop-blur-3xl">
-            <motion.div initial={{ opacity: 0, scale: 1.02, y: 40 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 1.02, y: 40 }} className={`relative w-full max-w-[1400px] glass-card p-16 border-2 overflow-y-auto max-h-[95vh] shadow-[0_0_150px_rgba(0,0,0,0.8)] ${draftingDay.isMasterEdit ? 'bg-slate-900 border-orange-500/30' : 'bg-slate-900 border-sky-500/30'}`}>
-              <div className="flex items-center justify-between mb-16">
-                <div className="flex items-center gap-10">
-                    <div className={`p-6 rounded-[2.5rem] shadow-2xl ${draftingDay.isMasterEdit ? 'bg-orange-500/10 text-orange-400 shadow-orange-500/10' : 'bg-sky-500/10 text-sky-400 shadow-sky-500/10'}`}>{draftingDay.isMasterEdit ? <Edit2 className="w-12 h-12" /> : <Send className="w-12 h-12" />}</div>
-                    <div><h2 className="text-5xl font-black uppercase tracking-tight">{draftingDay.isMasterEdit ? 'Protocol Architect' : 'Note Personalizer'}</h2><p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.4em] mt-3">{draftingDay.isMasterEdit ? 'Modifying master clinical pathways' : 'Injecting patient details into treatment plan'}</p></div>
+          </div>        {draftingDay && (
+          <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-[#020617]/98 backdrop-blur-3xl">
+            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className={`relative w-full max-w-4xl glass-card p-6 border border-white/10 overflow-y-auto max-h-[90vh] shadow-2xl ${draftingDay.isMasterEdit ? 'bg-slate-900 border-orange-500/30' : 'bg-slate-900 border-sky-500/30'}`}>
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-6">
+                    <div className={`p-3 rounded-xl shadow-lg ${draftingDay.isMasterEdit ? 'bg-orange-500/10 text-orange-400' : 'bg-sky-500/10 text-sky-400'}`}>{draftingDay.isMasterEdit ? <Edit2 className="w-6 h-6" /> : <Send className="w-6 h-6" />}</div>
+                    <div><h2 className="text-xl font-black uppercase tracking-tight">{draftingDay.isMasterEdit ? 'Edit Protocol' : 'Personalize Note'}</h2><p className="text-slate-600 text-[8px] font-black uppercase tracking-widest mt-1">Refining clinical documentation</p></div>
                 </div>
-                <button onClick={() => setDraftingDay(null)} className="p-5 bg-slate-800 rounded-[2rem] text-slate-500 hover:text-white transition-all shadow-xl"><X className="w-8 h-8" /></button>
+                <button onClick={() => setDraftingDay(null)} className="p-2 bg-slate-800 rounded-lg text-slate-500 hover:text-white"><X className="w-5 h-5" /></button>
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {!draftingDay.isMasterEdit && Object.keys(draftingDay.variables || {}).length > 0 && (
-                    <div className="space-y-16 bg-[#020617]/40 p-14 rounded-[4rem] border border-white/5 shadow-inner backdrop-blur-3xl">
-                        <div className="flex items-center gap-6 mb-4"><div className="w-10 h-10 bg-sky-500/20 rounded-2xl flex items-center justify-center"><Zap className="w-5 h-5 text-sky-400" /></div><h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-200">Patient Input Data</h3></div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                    <div className="space-y-8 bg-[#020617]/40 p-6 rounded-2xl border border-white/5 shadow-inner">
+                        <div className="flex items-center gap-3 mb-2"><Zap className="w-4 h-4 text-sky-400" /><h3 className="text-[9px] font-black uppercase tracking-widest text-slate-200">Patient Details</h3></div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {Object.keys(draftingDay.variables).map(key => (
-                                <div key={key} className="space-y-4">
-                                    <label className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em] ml-2">{key.replace(/_/g, ' ')}</label>
-                                    <input type="text" placeholder={`Enter ${key}...`} value={draftingDay.variables[key]} onChange={(e) => setDraftingDay({ ...draftingDay, variables: { ...draftingDay.variables, [key]: e.target.value } })} className="w-full bg-[#020617] border border-white/10 rounded-[2rem] py-6 px-10 focus:border-sky-500/50 text-white font-bold text-xl shadow-xl transition-all" />
+                                <div key={key} className="space-y-2">
+                                    <label className="text-[8px] font-black text-slate-600 uppercase tracking-widest ml-1">{key.replace(/_/g, ' ')}</label>
+                                    <input type="text" placeholder={`...`} value={draftingDay.variables[key]} onChange={(e) => setDraftingDay({ ...draftingDay, variables: { ...draftingDay.variables, [key]: e.target.value } })} className="w-full bg-[#020617] border border-white/10 rounded-lg py-2.5 px-4 focus:border-sky-500/50 text-white font-bold text-sm" />
                                 </div>
                             ))}
                         </div>
-                        <div className="mt-12 p-8 bg-sky-500/5 rounded-3xl border border-sky-500/10"><p className="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-2"><Info className="w-4 h-4" />Smart Logic Active</p><p className="text-slate-500 text-xs font-medium leading-relaxed">Changes in variable fields will propagate instantly to the note preview on the right.</p></div>
                     </div>
                 )}
-                <div className={`space-y-10 ${draftingDay.isMasterEdit || Object.keys(draftingDay.variables || {}).length === 0 ? 'lg:col-span-2' : ''}`}>
-                    <form onSubmit={handleSaveDraftOrMaster} className="space-y-12">
+                <div className={`space-y-6 ${draftingDay.isMasterEdit || Object.keys(draftingDay.variables || {}).length === 0 ? 'lg:col-span-2' : ''}`}>
+                    <form onSubmit={handleSaveDraftOrMaster} className="space-y-8">
                         <div className="relative group">
                             <textarea 
                                 name="note" 
@@ -631,20 +627,26 @@ export default function App() {
                                     }
                                 }} 
                                 required 
-                                rows={14} 
-                                className={`w-full bg-[#020617] border rounded-[4rem] py-14 px-14 focus:outline-none text-slate-200 text-3xl leading-relaxed font-medium transition-all shadow-[inset_0_2px_40px_rgba(0,0,0,0.5)] custom-scrollbar ${draftingDay.isMasterEdit ? 'border-orange-500/40 focus:border-orange-400' : 'border-white/5 focus:border-sky-400'}`} 
+                                rows={10} 
+                                className={`w-full bg-[#020617] border rounded-2xl py-6 px-6 focus:outline-none text-slate-300 text-base leading-relaxed font-medium transition-all shadow-inner ${draftingDay.isMasterEdit ? 'border-orange-500/40 focus:border-orange-400' : 'border-white/5 focus:border-sky-400'}`} 
                             />
-                            {!draftingDay.isMasterEdit && <div className="absolute top-8 right-12 px-6 py-2 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-[9px] font-black uppercase tracking-[0.2em] backdrop-blur-xl">Personalized Preview</div>}
+                            {!draftingDay.isMasterEdit && <div className="absolute top-4 right-6 px-3 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-[7px] font-black uppercase tracking-widest backdrop-blur-xl">Preview Mode</div>}
                         </div>
-                        <div className="flex flex-wrap gap-8">
-                            <button type="submit" className={`flex-1 py-10 font-black uppercase tracking-[0.3em] text-[10px] rounded-[2.5rem] flex items-center justify-center gap-6 shadow-2xl transition-all active:scale-95 whitespace-nowrap min-w-[280px] ${draftingDay.isMasterEdit ? 'bg-orange-600 text-white shadow-orange-600/30' : 'bg-sky-600 text-white shadow-sky-600/30'}`}>{draftingDay.isMasterEdit ? <Save className="w-8 h-8" /> : <Copy className="w-8 h-8" />}{draftingDay.isMasterEdit ? 'Commit to Playbook' : 'Finalize & Copy Note'}</button>
-                            <button type="button" onClick={() => setDraftingDay(null)} className="px-16 bg-slate-800 text-slate-400 rounded-[2.5rem] font-black uppercase tracking-[0.3em] text-[10px] py-10 hover:bg-slate-700 transition-all flex-none">Discard Changes</button>
+                        <div className="flex flex-wrap gap-4">
+                            <button type="submit" className={`flex-1 h-11 font-black uppercase tracking-widest text-[9px] rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all active:scale-95 whitespace-nowrap min-w-[200px] ${draftingDay.isMasterEdit ? 'bg-orange-600 text-white shadow-orange-600/10' : 'bg-sky-600 text-white shadow-sky-600/10'}`}>{draftingDay.isMasterEdit ? <Save className="w-5 h-5" /> : <Copy className="w-5 h-5" />}{draftingDay.isMasterEdit ? 'Commit Changes' : 'Finalize & Copy'}</button>
+                            <button type="button" onClick={() => setDraftingDay(null)} className="px-10 h-11 bg-slate-800 text-slate-400 rounded-xl font-black uppercase tracking-widest text-[9px] flex-none">Discard</button>
                         </div>
                     </form>
                 </div>
               </div>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+>
         )}
       </AnimatePresence>
     </div>
