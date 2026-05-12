@@ -328,6 +328,51 @@ export default function App() {
         </div>
       </header>
 
+      {/* MOBILE MENU DRAWER */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] lg:hidden" />
+            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="fixed right-0 top-0 bottom-0 w-[280px] bg-slate-900 border-l border-slate-800 z-[70] lg:hidden shadow-2xl flex flex-col">
+              <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+                <span className="text-sm font-black uppercase tracking-widest text-slate-400">Navigation</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-slate-500 hover:text-white"><X className="w-5 h-5" /></button>
+              </div>
+              <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                <div className="mb-6 px-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                    <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm" />
+                  </div>
+                </div>
+                {isAdminMode && (
+                  <button onClick={() => { setIsMobileMenuOpen(false); selectedCategory === 'ward' ? setIsCreatingProtocol(true) : setIsCreating(true); }} className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl bg-medical-600 text-white shadow-lg shadow-medical-500/20 active:scale-95 transition-all">
+                    <Plus className="w-5 h-5" />
+                    <span className="text-xs font-black uppercase tracking-widest">Add New Entry</span>
+                  </button>
+                )}
+                <div className="pt-4 space-y-2">
+                  {CATEGORIES.map((cat) => (
+                    <button key={cat.id} onClick={() => { setSelectedCategory(cat.id); setSelectedProtocol(null); setIsMobileMenuOpen(false); }} className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all ${selectedCategory === cat.id ? 'bg-medical-500/10 text-medical-400 border border-medical-500/20' : 'text-slate-400 hover:bg-slate-800'}`}>
+                      <cat.icon className="w-5 h-5" />
+                      <span className="text-xs font-black uppercase tracking-widest">{cat.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 border-t border-slate-800 bg-slate-950/50">
+                <div className="flex items-center justify-between px-2">
+                  <span className={`text-[10px] font-black uppercase tracking-wider ${isAdminMode ? 'text-orange-400' : 'text-slate-500'}`}>{isAdminMode ? 'Admin Active' : 'View Only'}</span>
+                  <button onClick={() => setIsAdminMode(!isAdminMode)} className={`w-10 h-5 rounded-full relative transition-colors ${isAdminMode ? 'bg-orange-500/30' : 'bg-slate-700'}`}>
+                    <motion.div animate={{ x: isAdminMode ? 22 : 2 }} className={`w-3.5 h-3.5 rounded-full mt-0.5 shadow-sm ${isAdminMode ? 'bg-orange-400' : 'bg-slate-500'}`} />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Area */}
       <main className="flex-1 overflow-hidden flex flex-col">
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-12 scroll-smooth bg-slate-950">
