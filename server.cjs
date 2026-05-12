@@ -168,7 +168,7 @@ const PORT = process.env.PORT || 3001;
 // Production Static Serving
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'dist')));
-    app.get('(.*)', (req, res, next) => {
+    app.get('*path', (req, res, next) => {
         if (req.path.startsWith('/api')) return next();
         res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
