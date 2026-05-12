@@ -376,8 +376,8 @@ export default function App() {
 
       {/* Main Area */}
       <main className="flex-1 overflow-hidden flex flex-col">
-        <div className="flex-1 overflow-y-auto p-8 lg:p-16 scroll-smooth custom-scrollbar">
-          <div className="max-w-[1500px] mx-auto relative pb-32">
+        <div className="flex-1 overflow-y-auto p-4 lg:p-6 scroll-smooth custom-scrollbar">
+          <div className="max-w-[1400px] mx-auto relative pb-16">
             
             {selectedCategory === 'calc' ? (
                 /* CALCULATORS */
@@ -456,7 +456,7 @@ export default function App() {
                             ))}
                         </AnimatePresence>
                     </div>
-
+                </>
             ) : selectedProtocol ? (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
                     <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-4 gap-4">
