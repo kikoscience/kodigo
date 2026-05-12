@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  docplaybook:
+    build: .
+    container_name: docplaybook-app
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_SERVER=10.0.1.90
+      - DB_USER=sa
+      - DB_PASSWORD=Rfx14w.14w.
+      - DB_DATABASE=MedPlaybook
+    networks:
+      - clinical-net
+
+networks:
+  clinical-net:
+    driver: bridge
