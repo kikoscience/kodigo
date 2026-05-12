@@ -35,7 +35,8 @@ import {
   Menu,
   TrendingUp,
   Award,
-  ArrowRight
+  ArrowRight,
+  ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -413,95 +414,92 @@ export default function App() {
                     </div>
                 </div>
             ) : selectedCategory === 'ward' && !selectedProtocol ? (
-                /* DASHBOARD + PLAYBOOK */
-                <>
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-20 grid grid-cols-1 xl:grid-cols-3 gap-10">
-                        <div className="xl:col-span-2 glass-card p-12 medical-gradient flex flex-col justify-between group overflow-hidden relative">
-                            <div className="absolute top-0 right-0 p-24 bg-sky-500/10 blur-[120px] rounded-full -mr-20 -mt-20 group-hover:bg-sky-500/20 transition-all duration-1000" />
+                /* DASHBOARD + PLAYBOOK */                <>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12 grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        <div className="xl:col-span-2 glass-card p-8 medical-gradient flex flex-col justify-between group overflow-hidden relative rounded-3xl">
+                            <div className="absolute top-0 right-0 p-16 bg-sky-500/10 blur-[80px] rounded-full -mr-10 -mt-10 group-hover:bg-sky-500/20 transition-all duration-1000" />
                             <div className="relative z-10">
-                                <div className="flex items-center gap-4 text-sky-400 mb-6"><ShieldCheck className="w-6 h-6 animate-float" /><span className="text-[11px] font-black uppercase tracking-[0.4em]">Official Protocol Hub</span></div>
-                                <h2 className="text-6xl font-black leading-none tracking-tight max-w-2xl">Precision Care, <br/><span className="text-slate-500">Day by Day.</span></h2>
+                                <div className="flex items-center gap-3 text-sky-400 mb-4"><ShieldCheck className="w-5 h-5 animate-float" /><span className="text-[9px] font-black uppercase tracking-[0.3em]">Protocol Hub</span></div>
+                                <h2 className="text-4xl font-black leading-tight tracking-tight max-w-xl">Precision Care, <br/><span className="text-slate-500 text-3xl">Day by Day.</span></h2>
                             </div>
-                            <div className="mt-12 flex items-center gap-12 relative z-10 pt-10 border-t border-white/5">
-                                <div className="flex flex-col"><span className="text-4xl font-black text-white">{protocols.length}</span><span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] mt-1">Active Conditions</span></div>
-                                <div className="w-px h-12 bg-white/5" />
-                                <div className="flex flex-col"><span className="text-4xl font-black text-white">{templates.length}</span><span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] mt-1">Quick Templates</span></div>
-                                <div className="w-px h-12 bg-white/5" />
-                                <div className="flex flex-col"><span className="text-4xl font-black text-emerald-400">99%</span><span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] mt-1">System Integrity</span></div>
+                            <div className="mt-8 flex items-center gap-8 relative z-10 pt-6 border-t border-white/5">
+                                <div className="flex flex-col"><span className="text-3xl font-black text-white">{protocols.length}</span><span className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Conditions</span></div>
+                                <div className="w-px h-10 bg-white/5" />
+                                <div className="flex flex-col"><span className="text-3xl font-black text-white">{templates.length}</span><span className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Templates</span></div>
                             </div>
                         </div>
-                        <div className="glass-card p-10 flex flex-col justify-between border-emerald-500/20 bg-emerald-500/5 relative group overflow-hidden">
-                             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                             <div className="relative z-10"><h3 className="text-xl font-black mb-2 flex items-center gap-3"><Award className="w-6 h-6 text-emerald-400" />Ward Status</h3><p className="text-slate-500 text-sm font-medium leading-relaxed">System is running on high-performance MSSQL. All clinical pathways are verified.</p></div>
-                             <div className="pt-8 relative z-10"><button onClick={() => setSelectedCategory('soap')} className="w-full btn-secondary h-16 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">View Daily Notes <ArrowRight className="w-4 h-4 ml-2" /></button></div>
+                        <div className="glass-card p-8 flex flex-col justify-between border-emerald-500/20 bg-emerald-500/5 relative group overflow-hidden rounded-3xl">
+                             <div className="relative z-10"><h3 className="text-lg font-black mb-1 flex items-center gap-3"><Award className="w-5 h-5 text-emerald-400" />Status</h3><p className="text-slate-500 text-xs font-medium leading-relaxed">System running on MSSQL.</p></div>
+                             <div className="pt-6 relative z-10"><button onClick={() => setSelectedCategory('soap')} className="w-full btn-secondary h-12 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 text-[9px]">Daily Notes <ArrowRight className="w-4 h-4 ml-2" /></button></div>
                         </div>
                     </motion.div>
 
-                    <div className="mb-10 flex items-center justify-between"><h2 className="text-2xl font-black tracking-tight flex items-center gap-4">Condition Playbook <span className="text-slate-700 text-lg">/</span> <span className="text-slate-500 text-base font-bold">{filteredProtocols.length} Protocols</span></h2></div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                    <div className="mb-6 flex items-center justify-between"><h2 className="text-xl font-black tracking-tight flex items-center gap-3 text-slate-400">Condition Playbook <span className="text-slate-700 text-sm">{filteredProtocols.length}</span></h2></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                         <AnimatePresence mode='popLayout'>
                             {filteredProtocols.map((p, idx) => (
                                 <motion.div 
                                     key={p.id} 
-                                    initial={{ opacity: 0, y: 20 }} 
+                                    initial={{ opacity: 0, y: 15 }} 
                                     animate={{ opacity: 1, y: 0 }} 
-                                    transition={{ delay: idx * 0.05 }}
+                                    transition={{ delay: idx * 0.03 }}
                                     onClick={() => setSelectedProtocol(p)} 
-                                    className="glass-card glass-card-hover p-10 group cursor-pointer border-l-4 border-l-sky-500/40"
+                                    className="glass-card glass-card-hover p-6 group cursor-pointer border-l-2 border-l-sky-500/40 rounded-[1.5rem]"
                                 >
-                                    <div className="flex justify-between items-start mb-8">
-                                        <div className="p-4 bg-slate-900 rounded-3xl group-hover:bg-sky-500/10 transition-colors duration-500"><Stethoscope className="w-8 h-8 text-sky-400 group-hover:scale-110 transition-transform" /></div>
-                                        <span className="px-4 py-2 bg-sky-500/10 text-sky-400 rounded-full text-[9px] font-black border border-sky-500/20 uppercase tracking-[0.2em] group-hover:bg-sky-500 group-hover:text-white transition-all duration-500">{(p.days || []).length} Active Days</span>
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="p-3 bg-slate-900 rounded-xl group-hover:bg-sky-500/10 transition-colors"><Stethoscope className="w-6 h-6 text-sky-400" /></div>
+                                        <span className="px-3 py-1 bg-sky-500/10 text-sky-400 rounded-full text-[8px] font-black border border-sky-500/20 uppercase tracking-widest">{(p.days || []).length} Days</span>
                                     </div>
-                                    <h3 className="text-2xl font-black mb-4 group-hover:text-sky-400 transition-colors duration-500 leading-tight tracking-tight">{p.diagnosis}</h3>
-                                    <p className="text-slate-500 text-base mb-10 line-clamp-2 leading-relaxed font-medium group-hover:text-slate-400 transition-colors duration-500">{p.description}</p>
-                                    <div className="flex items-center justify-between text-[10px] text-slate-600 pt-8 border-t border-white/5 uppercase font-black tracking-[0.2em]">
-                                        <span className="flex items-center gap-3">View Pathway <ChevronRight className="w-4 h-4 text-sky-500" /></span>
-                                        <div className="w-10 h-10 rounded-2xl bg-slate-800 flex items-center justify-center group-hover:bg-sky-600 group-hover:rotate-90 transition-all duration-500"><TrendingUp className="w-4 h-4 text-white" /></div>
+                                    <h3 className="text-lg font-black mb-2 group-hover:text-sky-400 transition-colors leading-tight">{p.diagnosis}</h3>
+                                    <p className="text-slate-500 text-sm mb-6 line-clamp-2 font-medium">{p.description}</p>
+                                    <div className="flex items-center justify-between text-[9px] text-slate-600 pt-4 border-t border-white/5 uppercase font-black tracking-widest">
+                                        <span className="flex items-center gap-2">View <ArrowRight className="w-3 h-3" /></span>
+                                        <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center group-hover:bg-sky-600 transition-all"><ChevronRight className="w-4 h-4 text-white" /></div>
                                     </div>
                                 </motion.div>
                             ))}
                         </AnimatePresence>
                     </div>
                 </>
+
             ) : selectedProtocol ? (
                 /* DAILY COURSE */
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-16">
-                    <div className="flex flex-col xl:flex-row xl:items-end justify-between border-b border-white/5 pb-16 gap-12">
-                        <div className="space-y-8">
-                            <button onClick={() => setSelectedProtocol(null)} className="flex items-center gap-3 text-slate-600 hover:text-sky-400 transition-all group">
-                                <div className="w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center group-hover:-translate-x-2 transition-transform"><ChevronRight className="w-5 h-5 rotate-180" /></div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Return to Library</span>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
+                    <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-white/5 pb-8 gap-8">
+                        <div className="space-y-4">
+                            <button onClick={() => setSelectedProtocol(null)} className="flex items-center gap-3 px-6 py-3 bg-sky-600 text-white rounded-2xl shadow-xl shadow-sky-600/20 active:scale-95 transition-all group w-fit">
+                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                                <span className="text-[11px] font-black uppercase tracking-widest">Back to Directory</span>
                             </button>
                             <div>
-                                <div className="flex items-center gap-3 text-sky-400 mb-4"><ShieldCheck className="w-6 h-6" /><span className="text-[10px] font-black uppercase tracking-[0.4em]">Verified Clinical Guide</span></div>
-                                <div className="flex items-center gap-8">
-                                    <h2 className="text-7xl font-black text-white tracking-tight leading-none">{selectedProtocol.diagnosis}</h2>
-                                    {isAdminMode && <button onClick={() => handleDeleteProtocol(selectedProtocol.id)} title="Remove Condition" className="p-4 bg-rose-500/10 text-rose-500 rounded-2xl hover:bg-rose-500 hover:text-white transition-all active:scale-90"><Trash2 className="w-6 h-6" /></button>}
+                                <div className="flex items-center gap-2 text-sky-400 mb-1"><ShieldCheck className="w-4 h-4" /><span className="text-[9px] font-black uppercase tracking-[0.3em]">Verified Pathway</span></div>
+                                <div className="flex items-center gap-6">
+                                    <h2 className="text-4xl font-black text-white tracking-tight leading-tight">{selectedProtocol.diagnosis}</h2>
+                                    {isAdminMode && <button onClick={() => handleDeleteProtocol(selectedProtocol.id)} title="Remove Condition" className="p-3 bg-rose-500/10 text-rose-500 rounded-xl hover:bg-rose-500 hover:text-white transition-all active:scale-90"><Trash2 className="w-5 h-5" /></button>}
                                 </div>
-                                <p className="text-slate-500 text-2xl max-w-5xl font-medium leading-relaxed mt-6">{selectedProtocol.description}</p>
+                                <p className="text-slate-500 text-lg max-w-4xl font-medium leading-relaxed mt-2">{selectedProtocol.description}</p>
                             </div>
                         </div>
-                        <div className="flex flex-wrap items-center gap-6 shrink-0 pb-2">
-                            <button onClick={() => handleCopy((selectedProtocol.days || []).map(d => `Day ${d.dayNumber}:\n${d.note}`).join('\n\n'), 'all')} className={`btn-secondary px-10 h-16 rounded-[1.5rem] ${copyStatus === 'all' ? 'text-emerald-400 border-emerald-500/50' : ''}`}>{copyStatus === 'all' ? <Check className="w-6 h-6" /> : <Copy className="w-6 h-6" />}Copy Course</button>
-                            {isAdminMode && <button onClick={() => handleAddDayToProtocol(selectedProtocol.id)} className="btn-primary px-10 h-16 rounded-[1.5rem] shadow-sky-500/30 active:scale-95"><Plus className="w-6 h-6" />Add Next Day</button>}
+                        <div className="flex flex-wrap items-center gap-4 shrink-0">
+                            <button onClick={() => handleCopy((selectedProtocol.days || []).map(d => `Day ${d.dayNumber}:\n${d.note}`).join('\n\n'), 'all')} className={`btn-secondary h-12 px-6 rounded-xl text-[10px] ${copyStatus === 'all' ? 'text-emerald-400 border-emerald-500/50' : ''}`}>{copyStatus === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy Course</button>
+                            {isAdminMode && <button onClick={() => handleAddDayToProtocol(selectedProtocol.id)} className="btn-primary h-12 px-6 rounded-xl active:scale-95"><Plus className="w-4 h-4" />Add Day</button>}
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 gap-16 relative pb-32">
-                        <div className="absolute left-[59px] top-12 bottom-12 w-px bg-white/5 hidden md:block" />
+                    <div className="grid grid-cols-1 gap-8 relative pb-24">
+                        <div className="absolute left-[39px] top-8 bottom-8 w-px bg-white/5 hidden md:block" />
                         {(selectedProtocol.days || []).map((day) => (
-                            <div key={day.id} className="relative md:pl-32 group">
-                                <div className="absolute left-[51px] top-16 w-4 h-4 rounded-full bg-slate-950 border-4 border-slate-800 z-10 hidden md:block group-hover:border-sky-500 transition-colors duration-500 shadow-[0_0_20px_rgba(14,165,233,0)] group-hover:shadow-[0_0_20px_rgba(14,165,233,0.3)]" />
-                                <div className="glass-card p-12 border-white/5 hover:border-sky-500/20 transition-all duration-700 bg-slate-900/10">
-                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-12 gap-10">
-                                        <div className="flex items-center gap-8"><div className="w-20 h-20 rounded-[2rem] bg-slate-900 border border-white/10 flex items-center justify-center text-5xl font-black text-sky-400 group-hover:bg-sky-600 group-hover:text-white transition-all duration-700 shadow-xl">{day.dayNumber}</div><h4 className="font-black text-4xl text-white tracking-tight">Day {day.dayNumber} Pathway</h4></div>
-                                        <div className="flex flex-wrap items-center gap-4">
-                                            <button onClick={() => handleCopy(day.note, day.id)} className={`flex-1 sm:flex-none h-16 px-10 rounded-[1.5rem] transition-all duration-500 flex items-center justify-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] border active:scale-95 ${copyStatus === day.id ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-950 text-slate-500 border-white/5 hover:border-sky-500/30 hover:text-sky-300'}`}>{copyStatus === day.id ? <Check className="w-6 h-6" /> : <Copy className="w-6 h-6" />}Copy Note</button>
-                                            <button onClick={() => setDraftingDay({ protocolId: selectedProtocol.id, dayId: day.id, note: day.note, dayNumber: day.dayNumber, isMasterEdit: isAdminMode, variables: extractVariables(day.note) })} className={`flex-1 sm:flex-none h-16 px-10 rounded-[1.5rem] transition-all duration-500 flex items-center justify-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] border active:scale-95 ${isAdminMode ? 'bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500 hover:text-white' : 'bg-sky-600 text-white shadow-xl shadow-sky-600/20 hover:bg-sky-500'}`}>{isAdminMode ? <Edit2 className="w-6 h-6" /> : <Send className="w-6 h-6" />}{isAdminMode ? 'Edit Guide' : 'Personalize'}</button>
-                                            {isAdminMode && <button onClick={() => handleRemoveDayFromProtocol(selectedProtocol.id, day.id)} className="w-16 h-16 bg-rose-500/10 text-rose-400 rounded-[1.5rem] hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center border border-rose-500/20 active:scale-90 shrink-0 shadow-lg"><MinusCircle className="w-6 h-6" /></button>}
+                            <div key={day.id} className="relative md:pl-24 group">
+                                <div className="absolute left-[31px] top-12 w-4 h-4 rounded-full bg-slate-950 border-4 border-slate-800 z-10 hidden md:block group-hover:border-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)]" />
+                                <div className="glass-card p-6 md:p-8 border-white/5 hover:border-sky-500/20 transition-all duration-500 bg-slate-900/10 rounded-3xl">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
+                                        <div className="flex items-center gap-6"><div className="w-14 h-14 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center text-3xl font-black text-sky-400 group-hover:bg-sky-600 group-hover:text-white transition-all duration-500 shadow-lg">{day.dayNumber}</div><h4 className="font-black text-2xl text-white tracking-tight">Day {day.dayNumber}</h4></div>
+                                        <div className="flex flex-wrap items-center gap-3">
+                                            <button onClick={() => handleCopy(day.note, day.id)} className={`flex-1 sm:flex-none h-12 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest border active:scale-95 ${copyStatus === day.id ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-950 text-slate-500 border-white/5 hover:border-sky-500/30 hover:text-sky-300'}`}>{copyStatus === day.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy</button>
+                                            <button onClick={() => setDraftingDay({ protocolId: selectedProtocol.id, dayId: day.id, note: day.note, dayNumber: day.dayNumber, isMasterEdit: isAdminMode, variables: extractVariables(day.note) })} className={`flex-1 sm:flex-none h-12 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest border active:scale-95 ${isAdminMode ? 'bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500 hover:text-white' : 'bg-sky-600 text-white shadow-lg shadow-sky-600/20 hover:bg-sky-500'}`}>{isAdminMode ? <Edit2 className="w-4 h-4" /> : <Send className="w-4 h-4" />}{isAdminMode ? 'Edit' : 'Personalize'}</button>
+                                            {isAdminMode && <button onClick={() => handleRemoveDayFromProtocol(selectedProtocol.id, day.id)} className="w-12 h-12 bg-rose-500/10 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center border border-rose-500/20 active:scale-90 shrink-0"><MinusCircle className="w-4 h-4" /></button>}
                                         </div>
                                     </div>
-                                    <div className="bg-[#020617]/80 rounded-[3rem] p-12 border border-white/5 text-slate-300 text-2xl leading-relaxed whitespace-pre-wrap font-medium shadow-inner min-h-[200px]">{day.note}</div>
+                                    <div className="bg-[#020617]/80 rounded-2xl p-6 md:p-8 border border-white/5 text-slate-300 text-lg leading-relaxed whitespace-pre-wrap font-medium shadow-inner">{day.note}</div>
                                 </div>
                             </div>
                         ))}
