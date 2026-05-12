@@ -589,7 +589,10 @@ export default function App() {
                     <div className="flex gap-6 pt-10"><button type="submit" className="flex-1 py-8 bg-purple-600 hover:bg-purple-500 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] shadow-2xl shadow-purple-600/30 transition-all active:scale-95 text-[10px] flex items-center justify-center gap-4"><Save className="w-6 h-6" />Save Template</button><button type="button" onClick={() => { setEditingTemplate(null); setIsCreating(false); }} className="px-14 btn-secondary py-8 rounded-[2rem]">Cancel</button></div>
                 </form>
             </motion.div>
-          </div>        {draftingDay && (
+          </div>
+        )}
+
+        {draftingDay && (
           <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-[#020617]/98 backdrop-blur-3xl">
             <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className={`relative w-full max-w-4xl glass-card p-6 border border-white/10 overflow-y-auto max-h-[90vh] shadow-2xl ${draftingDay.isMasterEdit ? 'bg-slate-900 border-orange-500/30' : 'bg-slate-900 border-sky-500/30'}`}>
               <div className="flex items-center justify-between mb-8">
@@ -641,12 +644,6 @@ export default function App() {
               </div>
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
->
         )}
       </AnimatePresence>
     </div>
