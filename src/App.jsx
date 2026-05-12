@@ -158,8 +158,7 @@ export default function App() {
             showToast('Template saved');
         } catch (err) { showToast('Save failed', 'error'); }
     };
-    if (isAdminMode) initiateSecurityCheck('modify', action);
-    else action();
+    action();
   };
 
   const handleDeleteTemplate = (id) => {
@@ -221,7 +220,7 @@ export default function App() {
               showToast('Official guide updated');
           } catch (err) { showToast('Update failed', 'error'); }
       };
-      initiateSecurityCheck('modify', action);
+      action();
     } else {
       handleCopy(newNote, 'draft-copy');
     }
