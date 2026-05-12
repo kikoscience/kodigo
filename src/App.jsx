@@ -43,10 +43,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api';
 
 const CATEGORIES = [
-  { id: 'ward', name: 'Ward Rounds', icon: Stethoscope, color: 'text-sky-400', bg: 'bg-sky-500/10' },
-  { id: 'soap', name: 'Daily Notes', icon: ClipboardList, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-  { id: 'history', name: 'Admissions', icon: FileText, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-  { id: 'discharge', name: 'Discharge', icon: LogOut, color: 'text-rose-400', bg: 'bg-rose-500/10' },
+  { id: 'ward', name: 'Pathways', icon: ClipboardList, color: 'text-sky-400', bg: 'bg-sky-500/10' },
   { id: 'calc', name: 'Calculators', icon: Calculator, color: 'text-orange-400', bg: 'bg-orange-500/10' },
 ];
 
@@ -427,7 +424,7 @@ export default function App() {
                         </div>
                         <div className="glass-card p-5 flex flex-col justify-between border-white/5 bg-slate-900/40 rounded-xl">
                              <h3 className="text-sm font-black mb-1 flex items-center gap-2 text-slate-300"><Award className="w-4 h-4 text-emerald-400" />Status</h3>
-                             <button onClick={() => setSelectedCategory('soap')} className="w-full h-9 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Daily Notes</button>
+                             <p className="text-[10px] text-slate-500 font-medium">System Active</p>
                         </div>
                     </motion.div>
 
