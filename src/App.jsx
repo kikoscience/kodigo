@@ -543,7 +543,20 @@ export default function App() {
                 )}
                 <div className={`space-y-8 ${draftingDay.isMasterEdit ? 'lg:col-span-2' : ''}`}>
                     <form onSubmit={handleSaveDraftOrMaster} className="space-y-10">
-                        <textarea name="note" value={draftingDay.isMasterEdit ? draftingDay.note : processedDraftNote} onChange={(e) => { if (draftingDay.isMasterEdit) setDraftingDay({ ...draftingDay, note: e.target.value }); }} required rows={12} readOnly={!draftingDay.isMasterEdit && Object.keys(draftingDay.variables || {}).length > 0} className={`w-full bg-slate-950 border rounded-[40px] py-10 px-10 focus:outline-none text-slate-200 text-2xl leading-relaxed font-medium transition-all shadow-inner ${draftingDay.isMasterEdit ? 'border-orange-500/40 focus:border-orange-400' : 'border-slate-800 focus:border-medical-400'}`} />
+                        <textarea 
+                            name="note" 
+                            value={draftingDay.isMasterEdit ? draftingDay.note : (draftingDay.manualNote !== undefined ? draftingDay.manualNote : processedDraftNote)} 
+                            onChange={(e) => { 
+                                if (draftingDay.isMasterEdit) {
+                                    setDraftingDay({ ...draftingDay, note: e.target.value }); 
+                                } else {
+                                    setDraftingDay({ ...draftingDay, manualNote: e.target.value });
+                                }
+                            }} 
+                            required 
+                            rows={12} 
+                            className={`w-full bg-slate-950 border rounded-[40px] py-10 px-10 focus:outline-none text-slate-200 text-2xl leading-relaxed font-medium transition-all shadow-inner ${draftingDay.isMasterEdit ? 'border-orange-500/40 focus:border-orange-400' : 'border-slate-800 focus:border-medical-400'}`} 
+                        />
                         <div className="flex flex-wrap gap-6"><button type="submit" className={`flex-1 py-7 font-black uppercase tracking-widest text-xs rounded-[32px] flex items-center justify-center gap-4 shadow-2xl transition-all active:scale-95 whitespace-nowrap min-w-[200px] ${draftingDay.isMasterEdit ? 'bg-orange-600 text-white shadow-orange-500/20' : 'bg-medical-600 text-white shadow-medical-500/30'}`}>{draftingDay.isMasterEdit ? <Save className="w-6 h-6" /> : <Copy className="w-6 h-6" />}{draftingDay.isMasterEdit ? 'Save to Playbook' : 'Copy Finished Note'}</button><button type="button" onClick={() => setDraftingDay(null)} className="px-12 bg-slate-800 text-slate-400 rounded-[32px] font-black uppercase tracking-widest text-xs py-7 active:scale-95 flex-1 min-w-[150px]">Discard</button></div>
                     </form>
                 </div>
