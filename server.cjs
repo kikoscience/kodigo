@@ -12,6 +12,7 @@ const io = require('socket.io')(server, {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const baseConfig = {
     user: process.env.DB_USER,
@@ -280,6 +281,11 @@ app.get('/api/assets', async (req, res) => {
         const result = await pool.request().query('SELECT * FROM Assets');
         res.json(result.recordset);
     } catch (err) { res.status(500).send(err.message); }
+});
+
+// Serve frontend for all other routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3001;
