@@ -12,6 +12,10 @@ const io = require('socket.io')(server, {
 
 app.use(cors());
 app.use(express.json());
+
+// Health check route (Pre-static)
+app.get('/ping', (req, res) => res.status(200).send('pong'));
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 const baseConfig = {
@@ -284,8 +288,14 @@ app.get('/api/assets', async (req, res) => {
 });
 
 // Serve frontend for all other routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get('/*', (req, res) => {
+    const indexPath = path.join(__dirname, 'dist', 'index.html');
+    res.sendFile(indexPath, (err) => {
+        if (err) {
+            console.error('❌ Failed to serve index.html:', err.message);
+            res.status(500).send('Frontend build missing or inaccessible. Please run build.');
+        }
+    });
 });
 
 const PORT = process.env.PORT || 3002;
