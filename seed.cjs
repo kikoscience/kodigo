@@ -14,50 +14,82 @@ const dbConfig = {
 
 async function seed() {
     try {
-        console.log('🌱 Seeding DocPlaybook Clinical Data...');
+        console.log('🌱 Seeding Asset Command Center...');
         let pool = await mssql.connect(dbConfig);
 
-        // Clear existing data
-        await pool.request().query('DELETE FROM Encodings');
-        await pool.request().query('DELETE FROM Templates');
+        // Clear existing data (caution: dev only)
+        await pool.request().query('DELETE FROM Surveys');
+        await pool.request().query('DELETE FROM Resolutions');
+        await pool.request().query('DELETE FROM Findings');
+        await pool.request().query('DELETE FROM Assignments');
+        await pool.request().query('DELETE FROM Requests');
+        await pool.request().query('DELETE FROM Assets');
+        await pool.request().query('DELETE FROM Users');
 
-        // Seed Templates
-        const templates = [
-            { id: 't1', name: 'Standard Adult Physical Exam', cat: 'General Medicine', content: '{}' },
-            { id: 't2', name: 'Pediatric Developmental Milestone', cat: 'Pediatrics', content: '{}' },
-            { id: 't3', name: 'Cardiac Stress Test Protocol', cat: 'Cardiology', content: '{}' },
-            { id: 't4', name: 'Post-Operative Recovery Note', cat: 'Surgery', content: '{}' }
+        // Seed Users
+        const users = [
+            { id: 'u1', name: 'John Requester', role: 'Requester', dept: 'Admin' },
+            { id: 'u2', name: 'Sarah IT Supervisor', role: 'Provider', dept: 'IT' },
+            { id: 'u3', name: 'Mike IT Tech', role: 'Staff', dept: 'IT' },
+            { id: 'u4', name: 'Robert Eng Supervisor', role: 'Provider', dept: 'Engineering' },
+            { id: 'u5', name: 'David Eng Tech', role: 'Staff', dept: 'Engineering' }
         ];
 
-        for (const t of templates) {
+        for (const u of users) {
             await pool.request()
-                .input('id', mssql.NVarChar, t.id)
-                .input('name', mssql.NVarChar, t.name)
-                .input('cat', mssql.NVarChar, t.cat)
-                .input('cont', mssql.NVarChar, t.content)
-                .query('INSERT INTO Templates (id, name, category, content) VALUES (@id, @name, @cat, @cont)');
+                .input('id', mssql.NVarChar, u.id)
+                .input('name', mssql.NVarChar, u.name)
+                .input('role', mssql.NVarChar, u.role)
+                .input('dept', mssql.NVarChar, u.dept)
+                .query('INSERT INTO Users (id, name, role, dept) VALUES (@id, @name, @role, @dept)');
         }
 
-        // Seed initial Encodings
-        const encodings = [
-            { id: 'e1', patient: 'John Doe', tid: 't1', doctor: 'Dr. House', data: '{}' },
-            { id: 'e2', patient: 'Jane Watson', tid: 't3', doctor: 'Dr. Strange', data: '{}' }
+        // Seed Assets
+        const assets = [
+            { id: 'a1', tag: 'IT-001', type: 'Laptop', brand: 'Dell', model: 'Latitude 5420', serial: 'SN-99881', dept: 'IT', loc: 'HR Office' },
+            { id: 'a2', tag: 'ENG-102', type: 'HVAC', brand: 'Carrier', model: 'Infinity 26', serial: 'SN-HV-772', dept: 'Engineering', loc: 'Roof Deck' },
+            { id: 'a3', tag: 'IT-005', type: 'Switch', brand: 'Cisco', model: 'Catalyst 9300', serial: 'SN-CS-441', dept: 'IT', loc: 'Server Room' }
         ];
 
-        for (const e of encodings) {
+        for (const a of assets) {
             await pool.request()
-                .input('id', mssql.NVarChar, e.id)
-                .input('pname', mssql.NVarChar, e.patient)
-                .input('tid', mssql.NVarChar, e.tid)
-                .input('dname', mssql.NVarChar, e.doctor)
-                .input('data', mssql.NVarChar, e.data)
+                .input('id', mssql.NVarChar, a.id)
+                .input('tag', mssql.NVarChar, a.tag)
+                .input('type', mssql.NVarChar, a.type)
+                .input('brand', mssql.NVarChar, a.brand)
+                .input('model', mssql.NVarChar, a.model)
+                .input('serial', mssql.NVarChar, a.serial)
+                .input('dept', mssql.NVarChar, a.dept)
+                .input('loc', mssql.NVarChar, a.loc)
                 .query(`
-                    INSERT INTO Encodings (id, patientName, templateId, doctorName, data, status, createdAt)
-                    VALUES (@id, @pname, @tid, @dname, @data, 'Finalized', GETDATE())
+                    INSERT INTO Assets (id, assetTag, type, brand, model, serialNumber, dept, location, status)
+                    VALUES (@id, @tag, @type, @brand, @model, @serial, @dept, @loc, 'Active')
                 `);
         }
 
-        console.log('✨ Clinical Seeding Complete');
+        // Seed initial Requests
+        const requests = [
+            { id: 'r1', title: 'System Crashing', desc: 'Laptop keeps freezing on boot.', dept: 'IT', prio: 'High', loc: 'HR Office', aid: 'a1', rid: 'u1' },
+            { id: 'r2', title: 'AC Leakage', desc: 'Water dripping from the unit.', dept: 'Engineering', prio: 'Medium', loc: 'Roof Deck', aid: 'a2', rid: 'u1' }
+        ];
+
+        for (const r of requests) {
+            await pool.request()
+                .input('id', mssql.NVarChar, r.id)
+                .input('title', mssql.NVarChar, r.title)
+                .input('desc', mssql.NVarChar, r.desc)
+                .input('dept', mssql.NVarChar, r.dept)
+                .input('prio', mssql.NVarChar, r.prio)
+                .input('loc', mssql.NVarChar, r.loc)
+                .input('aid', mssql.NVarChar, r.aid)
+                .input('rid', mssql.NVarChar, r.rid)
+                .query(`
+                    INSERT INTO Requests (id, title, description, dept, priority, location, status, requesterId, assetId, createdAt)
+                    VALUES (@id, @title, @desc, @dept, @prio, @loc, 'Pending', @rid, @aid, GETDATE())
+                `);
+        }
+
+        console.log('✨ Seeding Complete');
         await pool.close();
     } catch (err) {
         console.error('❌ Seed Error:', err);
