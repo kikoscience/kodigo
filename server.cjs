@@ -288,5 +288,5 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 server.listen(PORT, () => console.log(`🚀 Operational Server with Real-time Sync running on port ${PORT}`));
