@@ -12,87 +12,103 @@ const dbConfig = {
     }
 };
 
+const PROTOCOLS = [
+    {
+        id: 'seed-1',
+        diagnosis: 'Dengue Fever (Warning Signs)',
+        description: 'Standard fluid management and monitoring for Dengue with warning signs.',
+        days: [
+            { id: 's1-d1', day: 1, note: 'Admit to ward. Start IVF {{iv_fluid_type}} at {{maintenance_rate}} ml/hr. Monitor BP/HR every 4 hours. Baseline CBC with Platelet count.' },
+            { id: 's1-d2', day: 2, note: 'Monitor for defervescence. Current Temp: {{temp}} C. Repeat CBC/Platelet every 12-24 hours. Watch for abdominal pain or persistent vomiting.' },
+            { id: 's1-d3', day: 3, note: 'Critical phase management. Ensure urine output >{{target_uop}} ml/kg/hr. Hematocrit monitoring every 8 hours if rising.' },
+            { id: 's1-d4', day: 4, note: 'Recovery phase. Taper IVF gradually to {{taper_rate}} ml/hr. Watch for signs of fluid overload.' },
+            { id: 's1-d5', day: 5, note: 'Stable for 24h without fever. Platelet count showing upward trend at {{current_plt}}k. Plan for discharge.' }
+        ]
+    },
+    {
+        id: 'seed-2',
+        diagnosis: 'Pneumonia (Adult)',
+        description: 'Management for Moderate Risk Community Acquired Pneumonia.',
+        days: [
+            { id: 's2-d1', day: 1, note: 'Start IV {{antibiotic_1}} 2g OD + {{antibiotic_2}} 500mg OD. Oxygen support if sat <{{target_sat}}%. Chest X-ray/Sputum Culture requested.' },
+            { id: 's2-d2', day: 2, note: 'Continue IV {{antibiotic_1}}. Monitor respiratory rate (Current: {{rr}} bpm) and work of breathing.' },
+            { id: 's2-d3', day: 3, note: 'Evaluate for clinical stability. If afebrile for 24h, consider shift to oral {{oral_antibiotic}} {{oral_dose}}.' }
+        ]
+    },
+    {
+        id: 'seed-4',
+        diagnosis: 'Congestive Heart Failure',
+        description: 'Diuretic optimization and congestion management.',
+        days: [
+            { id: 's4-d1', day: 1, note: 'Start IV {{loop_diuretic}} {{dose}} BID. Strict fluid restriction to {{fluid_limit}} ml/day. Daily weight monitoring.' },
+            { id: 's4-d2', day: 2, note: 'Monitor potassium levels (Current: {{k_level}}). Adjust diuretic based on net output (Target: {{target_net_uop}} ml).' }
+        ]
+    }
+];
+
+const TEMPLATES = [
+    {
+        id: 't1',
+        title: 'Standard Ward SOAP',
+        category: 'soap',
+        content: 'S: Patient comfortable, no new complaints.\nO: Stable Vitals. HR: {{hr}} bpm, BP: {{bp}} mmHg, Temp: {{temp}} C. Chest: {{chest_exam}}. Abdomen: {{abd_exam}}.\nA: {{diagnosis}} - Stable.\nP: Continue current management. Monitor for {{watch_for}}.'
+    },
+    {
+        id: 't2',
+        title: 'Discharge Summary',
+        category: 'discharge',
+        content: 'Final Diagnosis: {{diagnosis}}.\nCourse in the ward: Patient was admitted for {{complaint}}. Started on {{antibiotic}} for {{duration}} days. Clinical improvement noted.\nHome Medications: {{home_meds}}.\nFollow-up: Visit OPD in {{weeks}} week(s).'
+    },
+    {
+        id: 't3',
+        title: 'H&P Admission Note',
+        category: 'history',
+        content: 'Chief Complaint: {{complaint}}.\nHistory of Present Illness: {{hpi}}.\nPhysical Exam: BP: {{bp}}, HR: {{hr}}, RR: {{rr}}, Sat: {{sat}}%.\nAssessment: {{assessment}}.\nInitial Plan: Admit to {{ward_type}}. Start {{initial_ivf}}.'
+    }
+];
+
 async function seed() {
     try {
-        console.log('🌱 Seeding Asset Command Center...');
+        console.log('🌱 Seeding database with Smart Placeholders...');
         let pool = await mssql.connect(dbConfig);
 
-        // Clear existing data (caution: dev only)
-        await pool.request().query('DELETE FROM Surveys');
-        await pool.request().query('DELETE FROM Resolutions');
-        await pool.request().query('DELETE FROM Findings');
-        await pool.request().query('DELETE FROM Assignments');
-        await pool.request().query('DELETE FROM Requests');
-        await pool.request().query('DELETE FROM Assets');
-        await pool.request().query('DELETE FROM Users');
+        await pool.request().query("DELETE FROM ProtocolDays WHERE id LIKE 's%'");
+        await pool.request().query("DELETE FROM Protocols WHERE id LIKE 'seed%'");
+        await pool.request().query("DELETE FROM Templates WHERE id LIKE 't%'");
 
-        // Seed Users
-        const users = [
-            { id: 'u1', name: 'John Requester', role: 'Requester', dept: 'Admin' },
-            { id: 'u2', name: 'Sarah IT Supervisor', role: 'Provider', dept: 'IT' },
-            { id: 'u3', name: 'Mike IT Tech', role: 'Staff', dept: 'IT' },
-            { id: 'u4', name: 'Robert Eng Supervisor', role: 'Provider', dept: 'Engineering' },
-            { id: 'u5', name: 'David Eng Tech', role: 'Staff', dept: 'Engineering' }
-        ];
-
-        for (const u of users) {
+        for (const p of PROTOCOLS) {
             await pool.request()
-                .input('id', mssql.NVarChar, u.id)
-                .input('name', mssql.NVarChar, u.name)
-                .input('role', mssql.NVarChar, u.role)
-                .input('dept', mssql.NVarChar, u.dept)
-                .query('INSERT INTO Users (id, name, role, dept) VALUES (@id, @name, @role, @dept)');
+                .input('id', mssql.NVarChar, p.id)
+                .input('diag', mssql.NVarChar, p.diagnosis)
+                .input('desc', mssql.NVarChar, p.description)
+                .query('INSERT INTO Protocols (id, diagnosis, description) VALUES (@id, @diag, @desc)');
+            
+            for (const d of p.days) {
+                await pool.request()
+                    .input('id', mssql.NVarChar, d.id)
+                    .input('protoId', mssql.NVarChar, p.id)
+                    .input('dayNum', mssql.Int, d.day)
+                    .input('note', mssql.NVarChar, d.note)
+                    .query('INSERT INTO ProtocolDays (id, protocolId, dayNumber, note) VALUES (@id, @protoId, @dayNum, @note)');
+            }
         }
 
-        // Seed Assets
-        const assets = [
-            { id: 'a1', tag: 'IT-001', type: 'Laptop', brand: 'Dell', model: 'Latitude 5420', serial: 'SN-99881', dept: 'IT', loc: 'HR Office' },
-            { id: 'a2', tag: 'ENG-102', type: 'HVAC', brand: 'Carrier', model: 'Infinity 26', serial: 'SN-HV-772', dept: 'Engineering', loc: 'Roof Deck' },
-            { id: 'a3', tag: 'IT-005', type: 'Switch', brand: 'Cisco', model: 'Catalyst 9300', serial: 'SN-CS-441', dept: 'IT', loc: 'Server Room' }
-        ];
-
-        for (const a of assets) {
+        for (const t of TEMPLATES) {
             await pool.request()
-                .input('id', mssql.NVarChar, a.id)
-                .input('tag', mssql.NVarChar, a.tag)
-                .input('type', mssql.NVarChar, a.type)
-                .input('brand', mssql.NVarChar, a.brand)
-                .input('model', mssql.NVarChar, a.model)
-                .input('serial', mssql.NVarChar, a.serial)
-                .input('dept', mssql.NVarChar, a.dept)
-                .input('loc', mssql.NVarChar, a.loc)
-                .query(`
-                    INSERT INTO Assets (id, assetTag, type, brand, model, serialNumber, dept, location, status)
-                    VALUES (@id, @tag, @type, @brand, @model, @serial, @dept, @loc, 'Active')
-                `);
+                .input('id', mssql.NVarChar, t.id)
+                .input('title', mssql.NVarChar, t.title)
+                .input('cat', mssql.NVarChar, t.category)
+                .input('content', mssql.NVarChar, t.content)
+                .input('lastUsed', mssql.NVarChar, 'Smart Seed')
+                .query('INSERT INTO Templates (id, title, category, content, lastUsed) VALUES (@id, @title, @cat, @content, @lastUsed)');
         }
 
-        // Seed initial Requests
-        const requests = [
-            { id: 'r1', title: 'System Crashing', desc: 'Laptop keeps freezing on boot.', dept: 'IT', prio: 'High', loc: 'HR Office', aid: 'a1', rid: 'u1' },
-            { id: 'r2', title: 'AC Leakage', desc: 'Water dripping from the unit.', dept: 'Engineering', prio: 'Medium', loc: 'Roof Deck', aid: 'a2', rid: 'u1' }
-        ];
-
-        for (const r of requests) {
-            await pool.request()
-                .input('id', mssql.NVarChar, r.id)
-                .input('title', mssql.NVarChar, r.title)
-                .input('desc', mssql.NVarChar, r.desc)
-                .input('dept', mssql.NVarChar, r.dept)
-                .input('prio', mssql.NVarChar, r.prio)
-                .input('loc', mssql.NVarChar, r.loc)
-                .input('aid', mssql.NVarChar, r.aid)
-                .input('rid', mssql.NVarChar, r.rid)
-                .query(`
-                    INSERT INTO Requests (id, title, description, dept, priority, location, status, requesterId, assetId, createdAt)
-                    VALUES (@id, @title, @desc, @dept, @prio, @loc, 'Pending', @rid, @aid, GETDATE())
-                `);
-        }
-
-        console.log('✨ Seeding Complete');
+        console.log('✅ Database populated with Smart Placeholders!');
         await pool.close();
+        process.exit(0);
     } catch (err) {
-        console.error('❌ Seed Error:', err);
+        console.error('❌ Seeding Error:', err);
+        process.exit(1);
     }
 }
 
