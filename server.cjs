@@ -137,10 +137,13 @@ app.get('/api/templates', async (req, res) => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Serve frontend for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 =======
+=======
+>>>>>>> parent of d2ed359f (real time)
 app.post('/api/templates', async (req, res) => {
     const { id, title, category, content, lastUsed } = req.body;
     try {
@@ -167,6 +170,9 @@ app.delete('/api/templates/:id', async (req, res) => {
         await pool.request().input('id', mssql.NVarChar, req.params.id.toString()).query('DELETE FROM Templates WHERE id = @id');
         res.sendStatus(200);
     } catch (err) { res.status(500).send(err.message); }
+<<<<<<< HEAD
+>>>>>>> parent of d2ed359f (real time)
+=======
 >>>>>>> parent of d2ed359f (real time)
 });
 
