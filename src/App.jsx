@@ -3,7 +3,6 @@ import axios from 'axios';
 import { 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   ShieldCheck, Activity, Search, Layout, Settings, LogOut, 
   ChevronRight, ClipboardList, Users, Clock, Save, Trash2, 
   Check, X, AlertTriangle, Fingerprint, Zap, RefreshCw, 
@@ -11,8 +10,6 @@ import {
   Plus, MessageSquare, Star, FileText, Smartphone, HardDrive,
   AlertCircle
 =======
-=======
->>>>>>> parent of d2ed359f (real time)
 =======
 >>>>>>> parent of d2ed359f (real time)
   Plus, 
@@ -52,9 +49,6 @@ import {
   ArrowRight,
   ArrowLeft
 <<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of d2ed359f (real time)
-=======
 >>>>>>> parent of d2ed359f (real time)
 =======
 >>>>>>> parent of d2ed359f (real time)
@@ -65,17 +59,11 @@ const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localh
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 // Roles for Demo Purposed
 const ROLES = [
     { id: 'Requester', icon: Users, color: 'text-sky-400' },
     { id: 'Provider', icon: ShieldCheck, color: 'text-emerald-400' },
     { id: 'Staff', icon: Wrench, color: 'text-orange-400' }
-=======
-const CATEGORIES = [
-  { id: 'ward', name: 'Pathways', icon: ClipboardList, color: 'text-sky-400', bg: 'bg-sky-500/10' },
-  { id: 'calc', name: 'Calculators', icon: Calculator, color: 'text-orange-400', bg: 'bg-orange-500/10' },
->>>>>>> parent of d2ed359f (real time)
 =======
 const CATEGORIES = [
   { id: 'ward', name: 'Pathways', icon: ClipboardList, color: 'text-sky-400', bg: 'bg-sky-500/10' },

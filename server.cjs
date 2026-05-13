@@ -139,13 +139,10 @@ app.get('/api/templates', async (req, res) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 // Serve frontend for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 =======
-=======
->>>>>>> parent of d2ed359f (real time)
 =======
 >>>>>>> parent of d2ed359f (real time)
 =======
@@ -178,9 +175,6 @@ app.delete('/api/templates/:id', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of d2ed359f (real time)
-=======
 >>>>>>> parent of d2ed359f (real time)
 =======
 >>>>>>> parent of d2ed359f (real time)
