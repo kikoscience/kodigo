@@ -287,17 +287,13 @@ app.get('/api/assets', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
-// Catch-all to serve frontend for any other routes
-app.use((req, res) => {
+// Serve frontend for all other routes
+app.get('/*', (req, res) => {
     const indexPath = path.join(__dirname, 'dist', 'index.html');
     res.sendFile(indexPath, (err) => {
         if (err) {
             console.error('❌ Failed to serve index.html:', err.message);
-            // Don't send 500 if it's just a missing file during dev, 
-            // but for production this is a real error.
-            if (!res.headersSent) {
-                res.status(500).send('Frontend build missing or inaccessible.');
-            }
+            res.status(500).send('Frontend build missing or inaccessible. Please run build.');
         }
     });
 });
