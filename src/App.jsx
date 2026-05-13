@@ -4,7 +4,7 @@ import {
   ShieldCheck, Activity, Search, Layout, Settings, LogOut, 
   ChevronRight, ClipboardList, Users, Clock, Save, Trash2, 
   Check, X, AlertTriangle, Fingerprint, Zap, RefreshCw, 
-  Menu, TrendingUp, ArrowRight, ArrowLeft, Box, Tool, 
+  Menu, TrendingUp, ArrowRight, ArrowLeft, Box, Wrench, 
   Plus, MessageSquare, Star, FileText, Smartphone, HardDrive,
   AlertCircle
 } from 'lucide-react';
@@ -18,7 +18,7 @@ const socket = io(window.location.origin);
 const ROLES = [
     { id: 'Requester', icon: Users, color: 'text-sky-400' },
     { id: 'Provider', icon: ShieldCheck, color: 'text-emerald-400' },
-    { id: 'Staff', icon: Tool, color: 'text-orange-400' }
+    { id: 'Staff', icon: Wrench, color: 'text-orange-400' }
 ];
 
 const DEPARTMENTS = ['IT', 'Engineering'];
